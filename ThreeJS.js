@@ -6,18 +6,26 @@ const create3DEnvironment = () => {
 
     const scene = new THREE.Scene();
 
-    createCamera();
-    createLights();
-    loadModels();
-    createRenderer();
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+
+    const fov = 90;
+    const aspect = screen.width / screen.height;
+    const near = 0.1;
+    const far = 1000;
+    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+
+    const mainLight = new THREE.DirectionalLight(0xffffff, 5);
+    const hemisphereLight = new THREE.HemisphereLight(0xddeeff, 0x202020, 0);
+
+    const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+    const cube = new THREE.Mesh( geometry, material );
+    scene.add( cube );
+
+    const loader = new GLTFLoader();
 
     function createCamera() {
-        const fov = 35;
-        const aspect = window.innerWidth / window.innerHeight;
-        const near = 0.1;
-        const far = 1000;
-        const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-        camera.position.set(-1.5, 1.5, 10);
+        camera.position.set(0, 0, 10);
 
         window.addEventListener( 'resize', onWindowResizeCamera);
 
@@ -31,27 +39,25 @@ const create3DEnvironment = () => {
     }
 
     function createLights() {
-        const mainLight = new THREE.DirectionalLight(0xffffff, 5);
         mainLight.position.set(10, 10, 10);
-    
-        const hemisphereLight = new THREE.HemisphereLight(0xddeeff, 0x202020, 5);
         scene.add(mainLight, hemisphereLight);
     }
 
     function loadModels() {
-        const loader = new GLTFLoader();
-    
         loader.load(
             // resource URL
             "Img/Mars.glb",
     
             // onLoad callback
             // Here the loaded data is assumed to be an object
-            function ( obj ) {
+            function ( glb ) {
                 // Add the loaded object to the scene
-                scene.add( obj.scene );
+                const planet = glb.scene;
+                planet.scale.set(1,1,1);
+                scene.add(glb.scene);
+                renderer.render(scene, camera);
             },
-    
+            
             // onProgress callback
             function ( xhr ) {
                 console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
@@ -61,17 +67,18 @@ const create3DEnvironment = () => {
             function ( err ) {
                 console.error( 'An error happened' );
             }
-    );
+            
+        );
     };
 
     function createRenderer() {
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(screen.width, screen.height);
         renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.physicallyCorrectLights = true;
+        renderer.physicallyCorrectLights = false;
         
         document.getElementById("planet").appendChild(renderer.domElement);
 
+        
         window.addEventListener( 'resize', onWindowResizeRenderer);
 
         function onWindowResizeRenderer(){
@@ -80,6 +87,11 @@ const create3DEnvironment = () => {
         }
 
     }
+
+    createCamera();
+    createLights();
+    loadModels();
+    createRenderer();
 
 };
 
