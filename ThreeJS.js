@@ -1,62 +1,84 @@
-import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.136.0-4Px7Kx1INqCFBN0tXUQc/mode=imports/optimized/three.js';
+import * as THREE from './three.js/build/three.module.js'
+import { OrbitControls } from './three.js/examples/jsm/controls/OrbitControls.js'
+import { GLTFLoader } from './three.js/examples/jsm/loaders/GLTFLoader.js';
 
 const create3DEnvironment = () => {
-    const renderer = new THREE.WebGLRenderer( {antialiasing: true});
-
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio( window.devicePixelRatio );
-
-    const FOV = 20;
-    const aspect = window.innerWidth/window.innerHeight;
-    const nearClip = 0.1;
-    const farClip = 1000;
-    
-    const camera = new THREE.PerspectiveCamera(FOV, aspect, nearClip, farClip);
-
 
     const scene = new THREE.Scene();
 
-    const radius = 0.8;
-    const heightSegs = 64;
-    const widthSegs = 64;
+    createCamera();
+    createLights();
+    loadModels();
+    createRenderer();
 
-    const geometry = new THREE.SphereGeometry(radius, heightSegs, widthSegs);
+    function createCamera() {
+        const fov = 35;
+        const aspect = window.innerWidth / window.innerHeight;
+        const near = 0.1;
+        const far = 1000;
+        const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+        camera.position.set(-1.5, 1.5, 10);
 
-    var texture = new THREE.TextureLoader().load( 'Img/MarsTexture.jpg' );
-    var material = new THREE.MeshBasicMaterial( { map: texture } );
+        window.addEventListener( 'resize', onWindowResizeCamera);
 
-    var sphere = new THREE.Mesh(geometry, material);
-    scene.add(sphere);
+        function onWindowResizeCamera(){
 
-    camera.position.z = 3;
-    camera.position.x = -1;
+            console.log("resized");
+            camera.aspect = window.innerWidth/window.innerHeight;
+            camera.updateProjectionMatrix();
+        }
 
-    var animate = (time, speed = 1) => {
+    }
 
-        time *= 0.0001;
+    function createLights() {
+        const mainLight = new THREE.DirectionalLight(0xffffff, 5);
+        mainLight.position.set(10, 10, 10);
+    
+        const hemisphereLight = new THREE.HemisphereLight(0xddeeff, 0x202020, 5);
+        scene.add(mainLight, hemisphereLight);
+    }
 
-        const rotation = time * speed;
-        
-        sphere.rotation.y = -rotation;
-
-        renderer.render(scene, camera);
-
-        document.getElementById("planet").appendChild(renderer.domElement);
-        requestAnimationFrame(animate);
+    function loadModels() {
+        const loader = new GLTFLoader();
+    
+        loader.load(
+            // resource URL
+            "Img/Mars.glb",
+    
+            // onLoad callback
+            // Here the loaded data is assumed to be an object
+            function ( obj ) {
+                // Add the loaded object to the scene
+                scene.add( obj.scene );
+            },
+    
+            // onProgress callback
+            function ( xhr ) {
+                console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+            },
+    
+            // onError callback
+            function ( err ) {
+                console.error( 'An error happened' );
+            }
+    );
     };
 
-    requestAnimationFrame(animate);
+    function createRenderer() {
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.physicallyCorrectLights = true;
+        
+        document.getElementById("planet").appendChild(renderer.domElement);
 
-    window.addEventListener( 'resize', onWindowResize);
+        window.addEventListener( 'resize', onWindowResizeRenderer);
 
-    function onWindowResize(){
+        function onWindowResizeRenderer(){
+            renderer.setPixelRatio( window.devicePixelRatio );
+            renderer.setSize( window.innerWidth, window.innerHeight);
+        }
 
-        console.log("resized");
-        camera.aspect = window.innerWidth/window.innerHeight;
-        camera.updateProjectionMatrix();
-
-        renderer.setPixelRatio( window.devicePixelRatio );
-        renderer.setSize( window.innerWidth, window.innerHeight);
     }
 
 };
