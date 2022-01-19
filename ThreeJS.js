@@ -8,24 +8,19 @@ const create3DEnvironment = () => {
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
 
-    const fov = 90;
+    const fov = 15;
     const aspect = screen.width / screen.height;
     const near = 0.1;
     const far = 1000;
     const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 
-    const mainLight = new THREE.DirectionalLight(0xffffff, 5);
-    const hemisphereLight = new THREE.HemisphereLight(0xddeeff, 0x202020, 0);
-
-    const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-    const cube = new THREE.Mesh( geometry, material );
-    scene.add( cube );
+    const mainLight = new THREE.DirectionalLight(0xffffff, 10);
+    const hemisphereLight = new THREE.HemisphereLight(0xddeeff, 0x202020, 1.5);
 
     const loader = new GLTFLoader();
 
     function createCamera() {
-        camera.position.set(0, 0, 10);
+        camera.position.set(0, 0, 3);
 
         window.addEventListener( 'resize', onWindowResizeCamera);
 
@@ -39,14 +34,14 @@ const create3DEnvironment = () => {
     }
 
     function createLights() {
-        mainLight.position.set(10, 10, 10);
+        mainLight.position.set(5, 3, 5);
         scene.add(mainLight, hemisphereLight);
     }
 
     function loadModels() {
         loader.load(
             // resource URL
-            "Img/Mars.glb",
+            "Img/Mars1.glb",
     
             // onLoad callback
             // Here the loaded data is assumed to be an object
@@ -54,8 +49,23 @@ const create3DEnvironment = () => {
                 // Add the loaded object to the scene
                 const planet = glb.scene;
                 planet.scale.set(1,1,1);
+                planet.position.x = 1.2;
                 scene.add(glb.scene);
-                renderer.render(scene, camera);
+
+                var SPEED = 0.0005;
+
+                function rotatePlanet() {
+                    planet.rotation.x -= SPEED * 1;
+                    planet.rotation.y -= SPEED;
+                    planet.rotation.z -= SPEED * 1;
+                }
+
+                function render() {
+                    requestAnimationFrame(render);
+                    rotatePlanet();
+                    renderer.render(scene, camera); // Ne fonctionne que dans la fonction glb
+                }
+                render();
             },
             
             // onProgress callback
