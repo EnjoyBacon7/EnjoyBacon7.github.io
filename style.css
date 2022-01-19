@@ -1,0 +1,70 @@
+.navbar-custom{
+
+    border-radius: 10px;
+    margin: 10px;
+    top: 10px;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+#navigation {
+
+    opacity: 0.9; 
+    filter:(opacity=50); 
+
+}
+
+#welcome {
+    
+    margin-top: 100px;
+
+}
+
+.typed-out {
+    overflow: hidden;
+    border-right: .15em solid orange;
+    white-space: nowrap;
+    font-size: 1.6rem;
+    width: 0;
+    animation: typing 1s forwards;
+}
+
+.gen-div .slide {
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+
+}
+
+.gen-div .slide:nth-child(1) {
+
+    background-image: url("Background.png");
+    background-attachment: fixed;
+}
+.gen-div .slide:nth-child(2) {
+
+    background-color: green;
+
+}
+.gen-div .slide:nth-child(3) {
+
+    background-image: url("Photo_Moussolini.jpg");
+    background-attachment: fixed;
+
+}
+.gen-div .slide:nth-child(4) {
+
+    background-color: red;
+
+}
+.gen-div .slide:nth-child(5) {
+
+    background-color: purple;
+
+}
