@@ -17,8 +17,8 @@ const create3DEnvironment = () => {
     const scene = new THREE.Scene();
 
     const radius = 0.8;
-    const heightSegs = 32;
-    const widthSegs = 32;
+    const heightSegs = 64;
+    const widthSegs = 64;
 
     const geometry = new THREE.SphereGeometry(radius, heightSegs, widthSegs);
 
