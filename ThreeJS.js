@@ -3,7 +3,7 @@ import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.136.0-4Px7Kx1INqCFB
 const create3DEnvironment = () => {
     const renderer = new THREE.WebGLRenderer( {alpha: true, antialiasing: true});
 
-    renderer.setSize(window.innerWidth/3, window.innerWidth/3);
+    renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio( window.devicePixelRatio );
 
     const FOV = 40;
@@ -16,9 +16,9 @@ const create3DEnvironment = () => {
 
     const scene = new THREE.Scene();
 
-    const radius = 1;
-    const heightSegs = 32;
-    const widthSegs = 32;
+    const radius = 0.8;
+    const heightSegs = 64;
+    const widthSegs = 64;
 
     const geometry = new THREE.SphereGeometry(radius, heightSegs, widthSegs);
 
