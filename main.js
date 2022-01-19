@@ -10,7 +10,6 @@ for (var i = 0; i < parallax.length; i++) {
 window.addEventListener("scroll", function()
 {
     let offset = window.pageYOffset;
-    console.log(window.pageYOffset);
     for (var i = 0; i < parallax.length; i++) {
         parallax[i].style.backgroundPositionY = (initialPos[i]*0.7 + offset * (-0.7)) + "px";
     }
