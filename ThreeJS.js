@@ -1,7 +1,9 @@
-import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.136.0-4Px7Kx1INqCFBN0tXUQc/mode=imports/optimized/three.js';
+import * as THREE from './three/build/three.module.js';
+import { GLTFLoader } from './three/examples/jsm/loaders/GLTFLoader.js';
 
 const create3DEnvironment = () => {
     const renderer = new THREE.WebGLRenderer( {alpha: true, antialiasing: true});
+    const loader = new GLTFLoader();
 
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -13,20 +15,17 @@ const create3DEnvironment = () => {
     
     const camera = new THREE.PerspectiveCamera(FOV, aspect, nearClip, farClip);
 
-
     const scene = new THREE.Scene();
 
-    const radius = 0.8;
-    const heightSegs = 64;
-    const widthSegs = 64;
+    loader.load( './Img/Mars.glb', function ( gltf ) {
 
-    const geometry = new THREE.SphereGeometry(radius, heightSegs, widthSegs);
+        scene.add( gltf.scene );
 
-    var texture = new THREE.TextureLoader().load( 'Img/MarsTexture.jpg' );
-    var material = new THREE.MeshBasicMaterial( { map: texture } );
+    }, undefined, function ( error ) {
 
-    var sphere = new THREE.Mesh(geometry, material);
-    scene.add(sphere);
+        console.error( error );
+
+    } );
 
     camera.position.z = 3;
 
