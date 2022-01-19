@@ -18,8 +18,8 @@
 }
 
 #welcome {
-    
     margin-top: 100px;
+    width: 100%;
 
 }
 
@@ -37,14 +37,13 @@
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
-    justify-content: center;
     height: 100vh;
 
 }
 
 .gen-div .slide:nth-child(1) {
 
-    background-image: url("Background.png");
+    background-image: url("Img/Background.png");
     background-attachment: fixed;
 }
 .gen-div .slide:nth-child(2) {
@@ -54,7 +53,7 @@
 }
 .gen-div .slide:nth-child(3) {
 
-    background-image: url("Photo_Moussolini.jpg");
+    background-image: url("Img/Photo_Moussolini.jpg");
     background-attachment: fixed;
 
 }
@@ -67,4 +66,22 @@
 
     background-color: purple;
 
+}
+
+canvas {
+
+    margin-left: 10vw;
+    margin-top: 8%;
+
+}
+
+.title {
+
+    align-items: center;
+
+}
+
+.slide.parallax {
+
+    border: solid blue 2px;
 }
