@@ -1,5 +1,4 @@
-import * as THREE from 'https://cdn.skypack.dev/three@0.120.0/build/three.module.js'
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.120.0/examples/jsm/controls/OrbitControls.js'
+import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.136.0-4Px7Kx1INqCFBN0tXUQc/mode=imports/optimized/three.js';
 
 const create3DEnvironment = () => {
     const renderer = new THREE.WebGLRenderer( {antialiasing: true});
@@ -18,8 +17,8 @@ const create3DEnvironment = () => {
     const scene = new THREE.Scene();
 
     const radius = 0.8;
-    const heightSegs = 32;
-    const widthSegs = 32;
+    const heightSegs = 64;
+    const widthSegs = 64;
 
     const geometry = new THREE.SphereGeometry(radius, heightSegs, widthSegs);
 
@@ -57,7 +56,7 @@ const create3DEnvironment = () => {
         camera.updateProjectionMatrix();
 
         renderer.setPixelRatio( window.devicePixelRatio );
-        renderer.setSize( window.innerHeight, window.innerWidth);
+        renderer.setSize( window.innerWidth, window.innerHeight);
     }
 
 };
