@@ -12,14 +12,8 @@
 
 #navigation {
 
-    opacity: 0.9; 
+    opacity: 0.7; 
     filter:(opacity=50); 
-
-}
-
-#welcome {
-    margin-top: 100px;
-    width: 100%;
 
 }
 
@@ -41,14 +35,10 @@
 
 }
 
-.gen-div .slide:nth-child(1) {
+.gen-div .slide:nth-child(2) {
 
     background-image: url("Img/Background.png");
     background-attachment: fixed;
-}
-.gen-div .slide:nth-child(2) {
-
-    background-color: green;
 
 }
 .gen-div .slide:nth-child(3) {
@@ -68,13 +58,6 @@
 
 }
 
-canvas {
-
-    margin-left: 10vw;
-    margin-top: 8%;
-
-}
-
 .title {
 
     align-items: center;
@@ -83,5 +66,5 @@ canvas {
 
 .slide.parallax {
 
-    border: solid blue 2px;
+    border: none;
 }
