@@ -41,7 +41,7 @@ const create3DEnvironment = () => {
     function loadModelsglb() {
         loader.load(
             // resource URL
-            "Img/testcut.glb",
+            "Img/Mars1.glb",
     
             // onLoad callback
             // Here the loaded data is assumed to be an object
@@ -84,9 +84,9 @@ const create3DEnvironment = () => {
     function loadModelRT() {
 
         const geometry = new THREE.SphereGeometry(1, 64, 64);
-        const texture = new THREE.TextureLoader().load( "Img/MarsTexture.jpg" );
-        const normals = new THREE.TextureLoader().load( "Img/MarsTextureNormal.jpg");
-        const material = new THREE.MeshBasicMaterial({map: texture, normalMap: normals});
+        const texture = new THREE.TextureLoader().load( "Img/Background.png" );
+        //const normals = new THREE.TextureLoader().load( "Img/MarsTextureNormal.jpg");
+        const material = new THREE.MeshBasicMaterial({map: texture});
     
         
         const planet = new THREE.Mesh(geometry, material);
@@ -94,9 +94,9 @@ const create3DEnvironment = () => {
         scene.add(planet);
         
         function rotatePlanet() {
-            //planet.rotation.x -= SPEED * 1;
+            planet.rotation.x -= 0.0005;
             planet.rotation.y -= 0.0005;
-            //planet.rotation.z -= SPEED * 1;
+            planet.rotation.z -= 0.0005;
         }
 
         function render() {
