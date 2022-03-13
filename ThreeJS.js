@@ -38,10 +38,10 @@ const create3DEnvironment = () => {
         scene.add(mainLight, hemisphereLight);
     }
 
-    function loadModels() {
+    function loadModelsglb() {
         loader.load(
             // resource URL
-            "Img/Mars1.glb",
+            "Img/testcut.glb",
     
             // onLoad callback
             // Here the loaded data is assumed to be an object
@@ -55,9 +55,9 @@ const create3DEnvironment = () => {
                 var SPEED = 0.0005;
 
                 function rotatePlanet() {
-                    planet.rotation.x -= SPEED * 1;
+                    //planet.rotation.x -= SPEED * 1;
                     planet.rotation.y -= SPEED;
-                    planet.rotation.z -= SPEED * 1;
+                    //planet.rotation.z -= SPEED * 1;
                 }
 
                 function render() {
@@ -81,6 +81,36 @@ const create3DEnvironment = () => {
         );
     };
 
+    function loadModelRT() {
+
+        const geometry = new THREE.SphereGeometry(1, 64, 64);
+        const texture = new THREE.TextureLoader().load( "Img/MarsTexture.jpg" );
+        const normals = new THREE.TextureLoader().load( "Img/MarsTextureNormal.jpg");
+        const material = new THREE.MeshBasicMaterial({map: texture, normalMap: normals});
+    
+        
+        const planet = new THREE.Mesh(geometry, material);
+        planet.position.x = 1.2;
+        scene.add(planet);
+        
+        function rotatePlanet() {
+            //planet.rotation.x -= SPEED * 1;
+            planet.rotation.y -= 0.0005;
+            //planet.rotation.z -= SPEED * 1;
+        }
+
+        function render() {
+            requestAnimationFrame(render);
+            rotatePlanet();
+            renderer.render(scene, camera); // Ne fonctionne que dans la fonction glb
+        }
+        render();
+
+
+    };
+
+    
+
     function createRenderer() {
         renderer.setSize(screen.width, screen.height);
         renderer.setPixelRatio(window.devicePixelRatio);
@@ -100,7 +130,8 @@ const create3DEnvironment = () => {
 
     createCamera();
     createLights();
-    loadModels();
+    
+    loadModelRT();
     createRenderer();
 
 };
