@@ -84,9 +84,9 @@ const create3DEnvironment = () => {
     function loadModelRT() {
 
         const geometry = new THREE.SphereGeometry(1, 64, 64);
-        const texture = new THREE.TextureLoader().load( "Img/Background.png" );
-        //const normals = new THREE.TextureLoader().load( "Img/MarsTextureNormal.jpg");
-        const material = new THREE.MeshBasicMaterial({map: texture});
+        const texture = new THREE.TextureLoader().load( "Img/MarsTexture.jpg" );
+        const normals = new THREE.TextureLoader().load( "Img/MarsTextureNormal.jpg");
+        const material = new THREE.MeshBasicMaterial({map: texture, normalMap: normals});
     
         
         const planet = new THREE.Mesh(geometry, material);
