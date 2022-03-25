@@ -131,8 +131,8 @@ const create3DEnvironment = () => {
     createCamera();
     createLights();
     
-    loadModelRT();
-    createRenderer();
+    //loadModelRT();
+    //createRenderer();
 
 };
 

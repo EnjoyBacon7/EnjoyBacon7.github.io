@@ -35,6 +35,12 @@
 
 }
 
+.gen-div .slide:nth-child(1) {
+
+    background-color: yellow;
+
+}
+
 .gen-div .slide:nth-child(2) {
 
     background-image: url("Img/Background.png");
